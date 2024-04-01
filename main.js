@@ -1,180 +1,371 @@
-// Number: odd
-let numberInput = prompt("Enter a number:");
-let number = parseFloat(numberInput); 
-if (!isNaN(number)) {
-    if (number % 2 === 0) {
-        alert("The number is even.");
-    } else {
-        alert("The number is odd.");
+//confirm
+const answers = [
+    confirm("What does FAQ mean for?"),
+    confirm("What does the FAQ refer to?"),
+    confirm("What do the letters FAQ mean?"),
+    confirm("What is an example of a FAQ question?"),
+];
+//Prompts
+const answersprompt = [];
+
+answersprompt[0] = prompt("What is your name?");
+answersprompt[1] = prompt("How old are you?");
+answersprompt[2] = prompt("Where do you live?");
+
+console.log(answersprompt);
+
+//Item access
+const array = ["apple", "banana", "orange", "grape"];
+const index = prompt("Enter an index:");
+if (index === "length") {
+    alert(array.length);
+} else {
+    alert(array[index]);
+}
+// Item change
+const arr = []; 
+const indexnumber = prompt("Enter the index where you want to assign a value:");
+const valuenumber = prompt("Enter the value to assign:");
+
+arr[indexnumber] = valuenumber; 
+
+console.log(arr); 
+
+//Multiply table
+const multiplicationTable = [];
+for (let i = 1; i <= 5; i++) {
+    const row = [];
+    for (let j = 1; j <= 5; j++) {
+        row.push(i * j); 
     }
-} else {
-    alert("Invalid input. Please enter a valid number.");
+    multiplicationTable.push(row); 
 }
 
-// String: lexics
-let textInput = prompt("Enter a text:");
-let badWords = ["bad", "word"]; 
+console.log(multiplicationTable);
 
-let hasBadWords = false;
-for (let word of badWords) {
-    if (textInput.toLowerCase().includes(word)) {
-        hasBadWords = true;
-        break;
+//Multiply table slice
+const multiplicationTableslice = [];
+
+for (let i = 1; i <= 5; i++) {
+    const row = [];
+    for (let j = 1; j <= 5; j++) {
+        row.push(i * j); 
     }
+    const nonZeroRow = row.slice(0, i); 
+    multiplicationTableslice.push(nonZeroRow); 
 }
 
-if (hasBadWords) {
-    alert("The text contains one or more bad words.");
+console.log(multiplicationTableslice);
+
+//IndexOf Word
+const sentence = prompt("Enter a sentence with multiple words:");
+const targetWord = prompt("Enter the word you're searching for:");
+
+const words = sentence.split(" "); 
+const indexwords = words.indexOf(targetWord); 
+
+if (indexwords !== -1) {
+    console.log(`The word "${targetWord}" is at position ${indexwords + 1} in the sentence.`);
 } else {
-    alert("The text is clean.");
+    console.log(`The word "${targetWord}" is not found in the sentence.`);
 }
 
-// Boolean
-let questionBoolean = confirm("Do you like coding?");
-let answerBoolean = questionBoolean ? "Yes" : "No";
-console.log(answerBoolean);
+//Reverse
+const originalArray = [];
 
-if (questionBoolean) {
-    alert("Great! Keep coding!");
-} else {
-    alert("That's okay. Coding is not for everyone.");
+for (let i = 0; i < 5; i++) {
+    const userInput = prompt(`Enter element ${i + 1}:`);
+    originalArray.push(userInput);
+}
+const reversedArray = [];
+while (originalArray.length > 0) {
+    reversedArray.push(originalArray.pop()); 
+}
+console.log("Original array:", originalArray);
+console.log("Reversed array:", reversedArray);
+
+//shift та unshift
+const reversedAgainArray = [];
+while (reversedArray.length > 0) {
+    reversedAgainArray.unshift(reversedArray.shift());}
+console.log("Reversed again array:", reversedAgainArray);
+
+//Copy
+const originalArraycopy = [
+    [0, 0, 0, 0, 0],
+    [0, 1, 2, 3, 4],
+    [0, 2, 4, 6, 8],
+    [0, 3, 6, 9, 12],
+    [0, 4, 8, 12, 16]
+];
+
+const copiedArray = originalArraycopy.slice();
+console.log("Copied array:", copiedArray);
+
+//DeepCopy
+
+const originalArrayDeepCopy = [
+    [0, 0, 0, 0, 0],
+    [0, 1, 2, 3, 4],
+    [0, 2, 4, 6, 8],
+    [0, 3, 6, 9, 12],
+    [0, 4, 8, 12, 16]
+];
+
+const copiedArrayDeepCopy = originalArrayDeepCopy.slice();
+for (let i = 0; i < copiedArrayDeepCopy.length; i++) {
+    copiedArrayDeepCopy[i] = copiedArrayDeepCopy[i].slice();
 }
 
-// Comparison: sizes
-let sizeInput = prompt("Enter your size (our system):");
+console.log("Deep copied array:", copiedArrayDeepCopy);
 
-if (sizeInput === "XS") {
-    alert("Your size in American system: 0-2");
-} else if (sizeInput === "S") {
-    alert("Your size in American system: 4-6");
-} else if (sizeInput === "M") {
-    alert("Your size in American system: 8-10");
-} else if (sizeInput === "L") {
-    alert("Your size in American system: 12-14");
-} else if (sizeInput === "XL") {
-    alert("Your size in American system: 16-18");
-} else {
-    alert("Your size is not available in American system.");
+//Array Equals
+const arr1 = [1, 2, 3];
+const arr2 = [1, 2, 3];
+
+const areEqual = arr1 === arr2;
+
+console.log(areEqual); 
+
+//Flat
+const multiplyTable = [
+    [0, 0, 0, 0, 0],
+    [0, 1, 2, 3, 4],
+    [0, 2, 4, 6, 8],
+    [0, 3, 6, 9, 12],
+    [0, 4, 8, 12, 16]
+];
+
+const flattenedArray = multiplyTable.flat();
+console.log(flattenedArray); 
+console.log(flattenedArray.length); 
+
+//Destruct
+const userInput = prompt("Enter sentence:");
+
+const [firstLetter, , , , fifthLetter, , , , ninthLetter] = userInput;
+
+console.log(`First letter: ${firstLetter}`);
+console.log(`Fifth letter: ${fifthLetter}`);
+console.log(`Ninth letter: ${ninthLetter}`);
+
+//Destruct default
+const userInput2= prompt("Enter sentence:");
+
+const [secondLetter = '!', , fourthLetter = '!', fifthLetterr = '!'] = userInput2;
+
+console.log(`Second Letter: ${secondLetter}`);
+console.log(`Fourth Letter: ${fourthLetter}`);
+console.log(`Fifth Letter: ${fifthLetterr}`);
+
+//Multiply table rest
+const multiplyTable5 = [
+    [0, 0, 0, 0, 0],
+    [0, 1, 2, 3, 4],
+    [0, 2, 4, 6, 8],
+    [0, 3, 6, 9, 12],
+    [0, 4, 8, 12, 16]
+];
+
+const [
+    [, ...firstRow],
+    [, ...secondRow],
+    [, ...thirdRow],
+    [, ...fourthRow],
+    [, ...fifthRow]
+] = multiplyTable;
+
+const resultArray = [...firstRow, ...secondRow, ...thirdRow, ...fourthRow, ...fifthRow].filter(num => num !== 0);
+
+console.log(resultArray);
+
+//For Select Option
+const currencies = ["USD", "EUR", "GBP", "UAH"];
+let str = "<select>";
+
+for (const currency of currencies) {
+    str += `<option value="${currency}">${currency}</option>`;
 }
 
-// Ternary
-let gender = confirm("Are you male?") ? "You are male." : "You are female.";
-alert(gender);
+str += "</select>";
+document.write(str);
 
-// Training
-console.log(!!2); // true
-console.log(!!0); // false
-console.log(!!1); // true
-console.log(2 || 1); // 2
-console.log(2 || 0); // 2
-console.log(2 && 1); // 1
-console.log(1 && 2); // 2
-console.log(0 && 2); // 0
-console.log(0 || 1 || 2); // 1
-console.log(0 && 1 && 2); // 0
-console.log(2 || 1 || 0); // 2
-console.log(2 && 1 && 0); // 0
-console.log(confirm('left') || confirm('right')); // true if left or right
-console.log(confirm('left') && confirm('right')); // true if both left and right
-console.log(null || 2); // 2
-console.log(undefined && 1); // undefined
-console.log(alert("Hello") && confirm('Are you sexy?')); // Depends on the user's response
-console.log(alert("Hello") || confirm('Are you drunk?')); // true if user confirms
-console.log((undefined || 2) && (3 || "3.5") || (4 && 5)); // 3
-console.log((2 && 1) || (null && 0)); // 1
-console.log((2 > 1) && "greater"); // "greater"
-console.log((2 < 1) && null); // false
-console.log(null && (2 < 1)); // null
-console.log(1 ? "one" : "not one"); // "one"
-console.log(0 ? "zero" : "not zero"); // "not zero"
-console.log("0" ? "\"zero\"" : "not `zero`"); // "\"zero\""
-console.log(parseInt("0") ? 'true' : 'false'); // false
-console.log(("" || 2) && (3 || "3.5") || (4 && 5)); // "3"
-console.log((-1 + 1) && "zero"); // 0
-console.log("-1" + 1 && "oups"); // "oups"
-console.log(typeof null === 'object' ? "null is object" : "null is null"); // "null is object"
-console.log(Math.random() < 0.5 && 'less' || 'more'); // "less" or "more"
-console.log((a = Math.random()) < 0.5 && 'less: '+a || 'more: '+a); // Depends on the value of 'a'
-console.log([2,3,5,7,11].indexOf(7) > -1 ? 'prime' : 'not found'); // "prime"
+//For Table Horizontal
+const names = ["John", "Paul", "George", "Ringo"];
+let TableHorizontal = "<table>";
 
-// Prompt: or
-let age = prompt("Enter your age:") || alert("Age not entered or cancelled.");
+TableHorizontal += "<tr>";
+for (const name of names) {
+    TableHorizontal += `<td>${name}</td>`;
+}
+TableHorizontal += "</tr>";
 
-// Confirm: or this days
-let shopping = confirm("Do you want to go shopping?") || alert("You are a coward.");
+TableHorizontal += "</table>";
 
-// Confirm: if this days
-let shoppingif = confirm("Do you want to go shopping?");
-if (!shoppingif) {
-    alert("You are a coward.");
+document.write(TableHorizontal);
+
+//For Table Vertical
+
+const nameslist = ["John", "Paul", "George", "Ringo"];
+let TableVertical = "<table>";
+
+for (const name of nameslist) {
+    TableVertical += "<tr>";
+    TableVertical += `<td>${name}</td>`;
+    TableVertical += "</tr>";
 }
 
-// Default: or
-let firstName = prompt("Enter your first name:") || "John";
-let middleName = prompt("Enter your middle name:") || "Doe";
-let lastName = prompt("Enter your last name:") || "Smith";
+TableVertical += "</table>";
 
-// Default: if
-let firstNameif = prompt("Enter your first name:");
-if (!firstNameif) {
-    firstNameif = "John";
-}
-let middleNameif = prompt("Enter your middle name:");
-if (!middleNameif) {
-    middleNameif = "Doe";
-}
-let lastNameif = prompt("Enter your last name:");
-if (!lastNameif) {
-    lastNameif = "Smith";
-}
+document.write(TableVertical);
 
-// Login and password
-let login = prompt("Enter your login:");
-if (login === "admin") {
-    let password = prompt("Enter your password:");
-    if (password === "qwerty") {
-        alert("Welcome, admin!");
-    } else {
-        alert("Incorrect password!");
+
+// For TableLetters
+const currencieslist = ["USD", "EUR", "GBP", "UAH"];
+let TableLetters = "<table>";
+
+for (let i = 0; i < currencieslist.length; i += 4) {
+    TableLetters += "<tr>";
+
+    for (let j = 0; j < 4; j++) {
+        const currency = currencieslist[i + j];
+        TableLetters += "<td>";
+
+        for (const letter of currency) {
+            TableLetters += `<div>${letter}</div>`;
+        }
+
+        TableLetters += "</td>";
     }
+
+    TableLetters += "</tr>";
+}
+
+TableLetters += "</table>";
+document.write(TableLetters);
+
+
+//For Multiply Table
+const colors = ['#FFFFFF', '#ECECEC']; 
+let MultiplyTable = '<table>';
+
+for (let i = 0; i <= 5; i++) {
+    MultiplyTable += '<tr>';
+
+    for (let j = 0; j <= 5; j++) {
+        const result = i * j;
+        MultiplyTable += `<td style="background-color:${colors[i % 2]};">${result}</td>`;
+    }
+
+    MultiplyTable += '</tr>';
+}
+
+MultiplyTable += '</table>';
+document.write(MultiplyTable);
+
+//capitalize
+const capitalize = strcapitalize => {
+    return strcapitalize.charAt(0).toUpperCase() + strcapitalize.slice(1).toLowerCase();
+}
+
+console.log(capitalize("cANBerRa")); 
+
+//MapCapitalize
+const MapCapitalize = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+const userMapCapitalize = "hello world";
+
+const wordsArray = userMapCapitalize.split(" ");
+
+const capitalizedWordsArray = wordsArray.map(MapCapitalize);
+
+const resultString = capitalizedWordsArray.join(" ");
+
+console.log(resultString); 
+
+
+//FilterLexics
+
+const forbiddenWords = ["bad", "ugly", "horrible"];
+
+const isAllowedWord = word => {
+    return !forbiddenWords.includes(word.toLowerCase());
+}
+
+const userInputFilterLexics = "good nice bad great";
+
+const wordsArrayFilterLexics = userInputFilterLexics.split(" ");
+
+const allowedWordsArray = wordsArrayFilterLexics.filter(isAllowedWord);
+
+const resultStringFilterLexics = allowedWordsArray.join(" ");
+
+console.log(resultStringFilterLexics);
+
+
+//BeepLexics
+const forbiddenWordsBeepLexics = ["bad", "ugly", "horrible"];
+
+const replaceWord = word => {
+    return forbiddenWords.includes(word.toLowerCase()) ? "BEEP" : word;
+}
+
+const userInputBeepLexics = "good nice bad great ugly";
+
+const wordsArrayBeepLexics = userInputBeepLexics.split(" ");
+
+const replacedWordsArray = wordsArrayBeepLexics.map(replaceWord);
+
+const resultStringBeepLexics = replacedWordsArray.join(" ");
+
+console.log(resultStringBeepLexics); 
+
+//ReduceHTML
+const currenciesReduceHTML = ["USD", "EUR", "GBP", "UAH"];
+
+const selectOptions = currenciesReduceHTML.reduce((accumulator, currency) => {
+    return accumulator + `<option>${currency}</option>`;
+}, "");
+
+const selectElement = `<select>${selectOptions}</select>`;
+
+console.log(selectElement); 
+
+//For Brackets Hell Check
+const line = prompt();
+const bracketsStack = [];
+let i = 0;
+let errorIndex = -1;
+
+for (const character of line) {
+    if (character === '[' || character === '{' || character === '(') {
+        bracketsStack.push({ character, index: i });
+    } else if (character === ']' || character === '}' || character === ')') {
+        if (bracketsStack.length === 0) {
+            errorIndex = i;
+            break;
+        }
+        const lastBracket = bracketsStack.pop();
+        if (
+            (character === ']' && lastBracket.character !== '[') ||
+            (character === '}' && lastBracket.character !== '{') ||
+            (character === ')' && lastBracket.character !== '(')
+        ) {
+            errorIndex = i;
+            break;
+        }
+    }
+    i++;
+}
+
+if (bracketsStack.length === 0 && errorIndex === -1) {
+    console.log("Успішно! Дужки розставлені правильно.");
 } else {
-    alert("Incorrect login!");
+    if (errorIndex === -1) {
+        errorIndex = bracketsStack[bracketsStack.length - 1].index;
+    }
+    console.log(`Помилка у позиції ${errorIndex}: Дужка не має відповідної пари.`);
 }
 
-// Currency exchange
-let currency = prompt("Enter the currency (e.g., USD, EUR):").toUpperCase();
-let buy = confirm("Do you want to buy?");
-
-let rate;
-if (currency === "USD") {
-    rate = buy ? 27.5 : 26.5;
-} else if (currency === "EUR") {
-    rate = buy ? 30 : 29;
-}
-
-let amount = parseFloat(prompt("Enter the amount:"));
-let result = buy ? amount / rate : amount * rate;
-alert(`You will get ${result.toFixed(2)} UAH.`);
-
-// Scissors
-let userChoice = prompt("Enter your choice (rock, paper, or scissors):").toLowerCase();
-let computerChoice = Math.random();
-if (computerChoice < 0.33) {
-    computerChoice = "rock";
-} else if (computerChoice < 0.66) {
-    computerChoice = "paper";
-} else {
-    computerChoice = "scissors";
-}
-alert(`Computer's choice: ${computerChoice}`);
-if (userChoice === computerChoice) {
-    alert("It's a tie!");
-} else if (
-    (userChoice === "rock" && computerChoice === "scissors") ||
-    (userChoice === "paper" && computerChoice === "rock") ||
-    (userChoice === "scissors" && computerChoice === "paper")
-) {
-    alert("You win!");
-} else {
-    alert("Computer wins!");
-}
