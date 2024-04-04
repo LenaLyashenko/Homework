@@ -1,150 +1,225 @@
-// Literals, Literals expand, Literals copy
-const cat = {
-    name: "Whiskers",
-    age: 3,
-    color: "grey"
+//Temperature
+const convertTemperature = (temp, fromUnit, toUnit) => {
+  if (fromUnit.toLowerCase() === 'celsius' && toUnit.toLowerCase() === 'fahrenheit') {
+    return (temp * 9/5) + 32;
+  } else if (fromUnit.toLowerCase() === 'fahrenheit' && toUnit.toLowerCase() === 'celsius') {
+    return (temp - 32) * (5/9);
+  } else {
+    return 'Invalid conversion';
+  }
 };
 
-const catWithPrompt = {
-    name: prompt("Enter cat's name:"),
-    age: prompt("Enter cat's age:"),
-    color: prompt("Enter cat's color:")
+const celsiusTemperature = parseFloat(prompt("Enter the temperature in Celsius:"));
+const convertedTemperature = convertTemperature(celsiusTemperature, 'celsius', 'fahrenheit');
+alert(`Temperature in Fahrenheit: ${convertedTemperature}`);
+
+
+//RGB
+const RGB = (r, g, b) => {
+  const toHex = (c) => {
+    const hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  };
+  
+  const red = toHex(Math.max(0, Math.min(255, r))); 
+  const green = toHex(Math.max(0, Math.min(255, g))); 
+  const blue = toHex(Math.max(0, Math.min(255, b))); 
+  
+  return `#${red}${green}${blue}`;
 };
 
-const copiedCat = {...catWithPrompt};
+const red = parseInt(prompt("Enter the value of red component (0-255):"));
+const green = parseInt(prompt("Enter the value of green component (0-255):"));
+const blue = parseInt(prompt("Enter the value of blue component (0-255):"));
 
-//Html tree:
-const htmlTree = {
-    tagName: 'body',
-    children: [
-        {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'span',
-                    children: ["Enter a data please:"]
-                },
-                {
-                    tagName: 'br'
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'name'
-                    }
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'surname'
-                    }
-                }
-            ]
-        },
-        {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'ok'
-                    },
-                    children: ["OK"]
-                },
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'cancel'
-                    },
-                    children: ["Cancel"]
-                }
-            ]
-        }
-    ]
+const colorCode = RGB(red, green, blue);
+alert(`CSS color code: ${colorCode}`);
+
+//Flats
+const findApartmentLocation = () => {
+  const floors = parseInt(prompt("Enter the number of floors in the building:"));
+  const apartmentsPerFloor = parseInt(prompt("Enter the number of apartments per floor:"));
+  const apartmentNumber = parseInt(prompt("Enter the apartment number:"));
+
+  const totalApartments = floors * apartmentsPerFloor;
+  const entrance = Math.ceil(apartmentNumber / totalApartments);
+  const floor = Math.ceil((apartmentNumber % totalApartments) / apartmentsPerFloor);
+
+  return { entrance, floor };
 };
 
-
-//parent
-htmlTree.children[0].children.forEach(child => child.parent = htmlTree.children[0]);
-htmlTree.children[1].children.forEach(child => child.parent = htmlTree.children[1]);
+const apartmentLocation = findApartmentLocation();
+alert(`Entrance: ${apartmentLocation.entrance}, Floor: ${apartmentLocation.floor}`);
 
 
-//Change OK
-const newId = prompt("Enter new id for OK button:");
-htmlTree.children[1].children[0].attrs.id = newId;
-
-//Destructure
-const { 
-    children: [
-        { children: [{ children: [spanText] }] },
-        ,
-        { children: [button2] }
-    ]
-} = htmlTree;
-
-const { attrs: { id: inputId } } = button2.children.find(child => child.tagName === 'input');
-
-console.log(spanText);
-console.log(button2.children[1].children[0]);
-console.log(inputId);
-
-//Destruct array
-let arr = [1,2,3,4,5, "a", "b", "c"];
-const [odd1, even1, odd2, even2, odd3, ...letters] = arr;
-
-console.log(even1, even2);
-console.log(odd1, odd2, odd3);
-console.log(letters);
-
-//Destruct string
-let arrstring = [1, "abc"];
-const [number, s1, s2, s3] = arrstring[1];
-
-console.log(number);
-console.log(s1);
-console.log(s2);
-console.log(s3);
-
-//Destruct 2
-let obj = {
-    name: 'Ivan',
-    surname: 'Petrov',
-    children: [{ name: 'Maria' }, { name: 'Nikolay' }]
+//Full name
+const capitalize = (str) => {
+  return str.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
-const { children: [{ name: name1 }, { name: name2 }] } = obj;
 
-console.log(name1, name2);
+const getCredentials = () => {
+  const name = prompt("Enter your name:").trim();
+  const surname = prompt("Enter your surname:").trim();
+  const fatherName = prompt("Enter your father's name:").trim();
 
-//Destruct 3
-let arr3 = [1,2,3,4,5,6,7,10];
-const [a, b, ...rest] = arr3;
-console.log(a, b, rest.length);
+  const fullName = `${capitalize(name)} ${capitalize(surname)} ${capitalize(fatherName)}`;
 
-//Copy delete
-const { [userKey]: excluded, ...copiedCat } = catWithPrompt;
-console.log(copiedCat);
+  return { name, surname, fatherName, fullName };
+};
 
+const credentials = getCredentials();
+console.log(credentials);
 
-//Currency real rate
-const fromCurrency = prompt('Enter the input currency:');
-const toCurrency = prompt('Enter the output currency:');
-const amount = parseFloat(prompt('Enter the amount:'));
-const apiUrl = `https://open.er-api.com/v6/latest/${fromCurrency.toUpperCase()}`;
+//New line 
+const convertToMultiline = (str) => {
+  return str.split("\\n").join("\n");
+};
 
-fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-        const exchangeRate = data.rates[toCurrency.toUpperCase()];
-        if (exchangeRate) {
-            const convertedAmount = amount * exchangeRate;
-            console.log(`${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`);
-        } else {
-            console.log('Invalid currency entered.');
-        }
-    })
-    .catch(error => console.log('Error fetching exchange rates:', error));
+const userInput = prompt("Enter a string with \\n as a newline marker:");
+const multilineString = convertToMultiline(userInput);
+console.log(multilineString);
 
 
+//Prompt OR
+const promptOrDefault = (promptText, defaultValue) => prompt(promptText) || defaultValue;
 
+const age = promptOrDefault("Enter your age:", "Not provided");
+
+if (age) {
+  console.log("Age entered:", age);
+} else {
+  alert("Please enter your age!");
+}
+
+//Login And Password
+const loginAndPassword = (correctLogin, correctPassword) => {
+  const enteredLogin = prompt("Enter your login:");
+  
+  if (enteredLogin === correctLogin) {
+      const enteredPassword = prompt("Enter your password:");
+      
+      if (enteredPassword === correctPassword) {
+          alert("Welcome!");
+          return true;
+      } else {
+          alert("Incorrect password!");
+          return false;
+      }
+  } else {
+      alert("Incorrect login!");
+      return false;
+  }
+};
+
+const correctLogin = "admin";
+const correctPassword = "qwerty";
+
+loginAndPassword(correctLogin, correctPassword);
+
+
+//generateMultiplicationTable
+function generateMultiplicationTable() {
+  document.write("<table border='1'>");
+
+  for (let i = 0; i <= 5; i++) {
+      document.write("<tr>");
+
+      for (let j = 0; j <= 5; j++) {
+          let result = i * j;
+          let backgroundColor = (i % 2 === 0) ? "lightblue" : "lightgreen";
+
+          document.write(`<td style='background-color: ${backgroundColor}'>${result}</td>`);
+      }
+
+      document.write("</tr>");
+  }
+
+  document.write("</table>");
+}
+
+generateMultiplicationTable();
+
+
+//
+function filterLexics(inputString, forbiddenWords) {
+  let words = inputString.split(" ");
+  
+  let filteredWords = words.filter(word => !forbiddenWords.includes(word));
+
+  let resultString = filteredWords.join(" ");
+  
+  return resultString;
+}
+
+let inputString = "Це речення містить слова, які потрібно видалити: бляха, муха, пляшка, шабля";
+let forbiddenWords = ['бляха', 'муха', "пляшка", "шабля"];
+let result = filterLexics(inputString, forbiddenWords);
+console.log(result); 
+
+//Currency
+function generateCurrencyTable(currencyRates) {
+  let html = '<table border="1">';
+  
+  html += '<tr><th></th>';
+  for (let i = 0; i < currencyRates.length; i++) {
+      html += `<th>${currencyRates[i][0]}</th>`; 
+  }
+  html += '</tr>'; 
+  
+  for (let i = 0; i < currencyRates.length; i++) {
+      html += '<tr>'; 
+      html += `<td>${currencyRates[i][0]}</td>`; 
+      for (let j = 1; j < currencyRates[i].length; j++) {
+          let crossRate = 1 / currencyRates[i][j];
+          html += `<td>${crossRate.toFixed(2)}</td>`; 
+      }
+      html += '</tr>'; 
+  }
+  
+  html += '</table>'; 
+  
+  return html;
+}
+
+let currencyRates = [
+  ['USD', 1, 1.03, 36.82, 4.94],
+  ['EUR', 0.97, 1, 35.80, 4.81],
+  ['UAH', 0.027, 0.028, 1, 0.13],
+  ['PLN', 0.2, 0.21, 7.45, 1]
+];
+
+let tableHtml = generateCurrencyTable(currencyRates);
+console.log(tableHtml);
+
+
+//Form
+function createFormFromObject(obj) {
+  let formHtml = '<form>';
+  
+  for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          let inputType = typeof obj[key] === 'number' ? 'number' : (typeof obj[key] === 'boolean' ? 'checkbox' : 'text');
+          let inputValue = inputType === 'checkbox' ? '' : ` value="${obj[key]}"`;
+          let checkboxChecked = inputType === 'checkbox' && obj[key] ? ' checked' : '';
+          
+          formHtml += `<label>${key}: <input type="${inputType}"${inputValue}${checkboxChecked}/></label><br>`;
+      }
+  }
+  
+  formHtml += '</form>';
+  
+  return formHtml;
+}
+
+const car = {
+  "Name": "chevrolet chevelle malibu",
+  "Cylinders": 8,
+  "Displacement": 307,
+  "Horsepower": 130,
+  "Weight_in_lbs": 3504,
+  "Origin": "USA",
+  "in_production": false
+};
+
+const formHtml = createFormFromObject(car);
+console.log(formHtml);
