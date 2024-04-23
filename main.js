@@ -1,150 +1,156 @@
-// Literals, Literals expand, Literals copy
-const cat = {
-    name: "Whiskers",
-    age: 3,
-    color: "grey"
-};
-
-const catWithPrompt = {
-    name: prompt("Enter cat's name:"),
-    age: prompt("Enter cat's age:"),
-    color: prompt("Enter cat's color:")
-};
-
-const copiedCat = {...catWithPrompt};
-
-//Html tree:
-const htmlTree = {
-    tagName: 'body',
-    children: [
+// blocks
+let a = 10;
+{
+    let b = 20;
+    {
+        let c = 30;
+        b++;
+        a *= 10;
+    }
+    {
+        let c = 50;
+        b += 500;
+    }
+    {
+        const a = 100500;
+        const d = "value";
         {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'span',
-                    children: ["Enter a data please:"]
-                },
-                {
-                    tagName: 'br'
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'name'
-                    }
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'surname'
-                    }
-                }
-            ]
-        },
-        {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'ok'
-                    },
-                    children: ["OK"]
-                },
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'cancel'
-                    },
-                    children: ["Cancel"]
-                }
-            ]
+            let a = -50;
+            b = 1000;
         }
-    ]
+    }
+}
+
+
+// comparison if
+let age = +prompt("Скільки вам років?", "");
+if (age < 0) 
+    alert("негативний вік");
+else if (age < 18) 
+    alert("школяр");
+else if (age < 30) 
+    alert("молодь");
+else if (age < 45) 
+    alert("зрілість");
+else if (age < 60) 
+    alert("захід сонця");
+else if (age >= 60) 
+    alert("як пенсія?");
+else 
+    alert("чи кіборг, чи KERNESS");
+
+// switch: sizes
+let size = "M";
+switch (size) {
+    case "S":
+        console.log("Small");
+        break;
+    case "M":
+        console.log("Medium");
+        break;
+    case "L":
+        console.log("Large");
+        break;
+    default:
+        console.log("Unknown size");
+}
+
+// switch: if
+let color = prompt("Введіть колір", "");
+if (color === "red") 
+    console.log("<div style='background-color: red;'>червоний</div>");
+else if (color === "black") 
+    console.log("<div style='background-color: black; color: white;'>чорний</div>");
+else if (color === "blue") 
+    console.log("<div style='background-color: blue;'>синій</div>");
+else if (color === "green") 
+    console.log("<div style='background-color: green;'>зелений</div>");
+else 
+    console.log("<div style='background-color: gray;'>Я не зрозумів</div>");
+
+// noswitch
+const noSwitch = (key, cases, defaultKey = 'default') => {
+    if (cases.hasOwnProperty(key)) 
+        return cases[key]();
+    else 
+        return cases[defaultKey]();
 };
 
+const drink = prompt("Що ви любите пити");
+noSwitch(drink, {
+    воду: () => console.log('Найздоровіший вибір!'),
+    чай: () => console.log('Смачна та корисна штука. Не перестарайтеся з цукром'),
+    "пиво": () => console.log('Добре влітку, та в міру'),
+    віскі: () => console.log('Та ви, батечку, естет! Не забудьте лід і сигару'),
+    default: () => console.log('шото я не зрозумів')
+});
 
-//parent
-htmlTree.children[0].children.forEach(child => child.parent = htmlTree.children[0]);
-htmlTree.children[1].children.forEach(child => child.parent = htmlTree.children[1]);
-
-
-//Change OK
-const newId = prompt("Enter new id for OK button:");
-htmlTree.children[1].children[0].attrs.id = newId;
-
-//Destructure
-const { 
-    children: [
-        { children: [{ children: [spanText] }] },
-        ,
-        { children: [button2] }
-    ]
-} = htmlTree;
-
-const { attrs: { id: inputId } } = button2.children.find(child => child.tagName === 'input');
-
-console.log(spanText);
-console.log(button2.children[1].children[0]);
-console.log(inputId);
-
-//Destruct array
-let arr = [1,2,3,4,5, "a", "b", "c"];
-const [odd1, even1, odd2, even2, odd3, ...letters] = arr;
-
-console.log(even1, even2);
-console.log(odd1, odd2, odd3);
-console.log(letters);
-
-//Destruct string
-let arrstring = [1, "abc"];
-const [number, s1, s2, s3] = arrstring[1];
-
-console.log(number);
-console.log(s1);
-console.log(s2);
-console.log(s3);
-
-//Destruct 2
-let obj = {
-    name: 'Ivan',
-    surname: 'Petrov',
-    children: [{ name: 'Maria' }, { name: 'Nikolay' }]
-};
-const { children: [{ name: name1 }, { name: name2 }] } = obj;
-
-console.log(name1, name2);
-
-//Destruct 3
-let arr3 = [1,2,3,4,5,6,7,10];
-const [a, b, ...rest] = arr3;
-console.log(a, b, rest.length);
-
-//Copy delete
-const { [userKey]: excluded, ...copiedCat } = catWithPrompt;
-console.log(copiedCat);
-
-
-//Currency real rate
-const fromCurrency = prompt('Enter the input currency:');
-const toCurrency = prompt('Enter the output currency:');
-const amount = parseFloat(prompt('Enter the amount:'));
-const apiUrl = `https://open.er-api.com/v6/latest/${fromCurrency.toUpperCase()}`;
-
-fetch(apiUrl)
+// closure calc
+fetch('https://open.er-api.com/v6/latest/USD')
     .then(res => res.json())
     .then(data => {
-        const exchangeRate = data.rates[toCurrency.toUpperCase()];
-        if (exchangeRate) {
-            const convertedAmount = amount * exchangeRate;
-            console.log(`${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`);
-        } else {
-            console.log('Invalid currency entered.');
+        console.log(data); 
+        for (let currency in data.rates) {
+            let button = document.createElement('button');
+            button.innerText = currency;
+            button.onclick = () => {
+                let amount = parseFloat(prompt(`Enter amount in ${currency}:`));
+                console.log(amount * data.rates[currency]);
+            };
+            document.body.appendChild(button);
         }
-    })
-    .catch(error => console.log('Error fetching exchange rates:', error));
+    });
 
+// closure calc 2
+const fromSelect = document.getElementById('from');
+const toSelect = document.getElementById('to');
 
+fetch('https://open.er-api.com/v6/latest/USD')
+    .then(res => res.json())
+    .then(data => {
+        for (let currency in data.rates) {
+            let option1 = document.createElement('option');
+            let option2 = document.createElement('option');
+            option1.innerText = option2.innerText = currency;
+            fromSelect.appendChild(option1);
+            toSelect.appendChild(option2);
+        }
+    });
 
+fromSelect.onchange = toSelect.onchange = () => {
+    const fromCurrency = fromSelect.value;
+    const toCurrency = toSelect.value;
+    document.getElementById('rate').innerText = `Exchange rate: ${data.rates[toCurrency] / data.rates[fromCurrency]}`;
+};
+
+document.getElementById('amount').oninput = () => {
+    const fromCurrency = fromSelect.value;
+    const toCurrency = toSelect.value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    document.getElementById('result').innerText = `Result: ${amount * (data.rates[toCurrency] / data.rates[fromCurrency])}`;
+};
+
+// countries and cities
+fetch('https://raw.githubusercontent.com/russ666/all-countries-and-cities-json/master/countries.min.json')
+    .then(res => res.json())
+    .then(data => {
+        console.log(data); 
+        const countriesSelect = document.getElementById('countries');
+        const citiesSelect = document.getElementById('cities');
+
+        for (let country in data) {
+            let option = document.createElement('option');
+            option.innerText = country;
+            countriesSelect.appendChild(option);
+        }
+
+        countriesSelect.onchange = () => {
+            citiesSelect.innerHTML = ''; 
+            const selectedCountry = countriesSelect.value;
+            data[selectedCountry].forEach(city => {
+                let option = document.createElement('option');
+                option.innerText = city;
+                citiesSelect.appendChild(option);
+            });
+        };
+    });
