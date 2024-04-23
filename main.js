@@ -1,150 +1,180 @@
-// Literals, Literals expand, Literals copy
-const cat = {
-    name: "Whiskers",
-    age: 3,
-    color: "grey"
-};
+// createPerson
+function createPerson(name, surname) {
+    return {
+        name: name,
+        surname: surname,
+        getFullName: function() {
+            return `${this.name} ${this.surname}`;
+        }
+    };
+}
 
-const catWithPrompt = {
-    name: prompt("Enter cat's name:"),
-    age: prompt("Enter cat's age:"),
-    color: prompt("Enter cat's color:")
-};
+const a = createPerson("Вася", "Пупкін");
+const b = createPerson("Ганна", "Іванова");
+const c = createPerson("Єлизавета", "Петрова");
 
-const copiedCat = {...catWithPrompt};
+console.log(a.getFullName()); 
+a.fatherName = 'Іванович';    
+console.log(a.getFullName()); 
 
-//Html tree:
-const htmlTree = {
-    tagName: 'body',
-    children: [
-        {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'span',
-                    children: ["Enter a data please:"]
-                },
-                {
-                    tagName: 'br'
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'name'
-                    }
-                },
-                {
-                    tagName: 'input',
-                    attrs: {
-                        type: 'text',
-                        id: 'surname'
-                    }
-                }
-            ]
+console.log(b.getFullName());
+
+//createPersonClosure
+function createPersonClosure(name, surname) {
+    let fatherName, age;
+
+    return {
+        getName: function() {
+            return name;
         },
-        {
-            tagName: 'div',
-            children: [
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'ok'
-                    },
-                    children: ["OK"]
-                },
-                {
-                    tagName: 'button',
-                    attrs: {
-                        id: 'cancel'
-                    },
-                    children: ["Cancel"]
-                }
-            ]
+        getSurname: function() {
+            return surname;
+        },
+        getFatherName: function() {
+            return fatherName;
+        },
+        getAge: function() {
+            return age;
+        },
+        getFullName: function() {
+            return `${name} ${surname} ${fatherName}`;
+        },
+        setName: function(newName) {
+            if (typeof newName === 'string' && newName.length > 0) {
+                name = newName;
+            }
+            return name;
+        },
+        setSurname: function(newSurname) {
+            if (typeof newSurname === 'string' && newSurname.length > 0) {
+                surname = newSurname;
+            }
+            return surname;
+        },
+        setFatherName: function(newFatherName) {
+            if (typeof newFatherName === 'string' && newFatherName.length > 0) {
+                fatherName = newFatherName;
+            }
+            return fatherName;
+        },
+        setAge: function(newAge) {
+            newAge = parseInt(newAge);
+            if (!isNaN(newAge) && newAge >= 0 && newAge <= 100) {
+                age = newAge;
+            }
+            return age;
+        },
+        setFullName: function(fullName) {
+            const parts = fullName.split(' ');
+            if (parts.length === 3) {
+                [name, surname, fatherName] = parts;
+            }
         }
-    ]
-};
+    };
+}
 
+const aa = createPersonClosure("Вася", "Пупкін");
+const bb = createPersonClosure("Ганна", "Іванова");
+console.log(aa.getName());
+aa.setAge(15);
+aa.setAge(150); 
+bb.setFullName("Петрова Ганна Миколаївна");
+console.log(bb.getFatherName()); 
 
-//parent
-htmlTree.children[0].children.forEach(child => child.parent = htmlTree.children[0]);
-htmlTree.children[1].children.forEach(child => child.parent = htmlTree.children[1]);
+//createPersonClosureDestruct
+function createPersonClosureDestruct({name, surname}) {
+    let fatherName, age;
 
-
-//Change OK
-const newId = prompt("Enter new id for OK button:");
-htmlTree.children[1].children[0].attrs.id = newId;
-
-//Destructure
-const { 
-    children: [
-        { children: [{ children: [spanText] }] },
-        ,
-        { children: [button2] }
-    ]
-} = htmlTree;
-
-const { attrs: { id: inputId } } = button2.children.find(child => child.tagName === 'input');
-
-console.log(spanText);
-console.log(button2.children[1].children[0]);
-console.log(inputId);
-
-//Destruct array
-let arr = [1,2,3,4,5, "a", "b", "c"];
-const [odd1, even1, odd2, even2, odd3, ...letters] = arr;
-
-console.log(even1, even2);
-console.log(odd1, odd2, odd3);
-console.log(letters);
-
-//Destruct string
-let arrstring = [1, "abc"];
-const [number, s1, s2, s3] = arrstring[1];
-
-console.log(number);
-console.log(s1);
-console.log(s2);
-console.log(s3);
-
-//Destruct 2
-let obj = {
-    name: 'Ivan',
-    surname: 'Petrov',
-    children: [{ name: 'Maria' }, { name: 'Nikolay' }]
-};
-const { children: [{ name: name1 }, { name: name2 }] } = obj;
-
-console.log(name1, name2);
-
-//Destruct 3
-let arr3 = [1,2,3,4,5,6,7,10];
-const [a, b, ...rest] = arr3;
-console.log(a, b, rest.length);
-
-//Copy delete
-const { [userKey]: excluded, ...copiedCat } = catWithPrompt;
-console.log(copiedCat);
-
-
-//Currency real rate
-const fromCurrency = prompt('Enter the input currency:');
-const toCurrency = prompt('Enter the output currency:');
-const amount = parseFloat(prompt('Enter the amount:'));
-const apiUrl = `https://open.er-api.com/v6/latest/${fromCurrency.toUpperCase()}`;
-
-fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-        const exchangeRate = data.rates[toCurrency.toUpperCase()];
-        if (exchangeRate) {
-            const convertedAmount = amount * exchangeRate;
-            console.log(`${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`);
-        } else {
-            console.log('Invalid currency entered.');
+    return {
+        getName() {
+            return name;
+        },
+        getSurname() {
+            return surname;
+        },
+        getFatherName() {
+            return fatherName;
+        },
+        getAge() {
+            return age;
+        },
+        getFullName() {
+            return `${name} ${surname} ${fatherName}`;
+        },
+        setName(newName) {
+            if (typeof newName === 'string' && newName.length > 0) {
+                name = newName;
+            }
+            return name;
+        },
+        setSurname(newSurname) {
+            if (typeof newSurname === 'string' && newSurname.length > 0) {
+                surname = newSurname;
+            }
+            return surname;
+        },
+        setFatherName(newFatherName) {
+            if (typeof newFatherName === 'string' && newFatherName.length > 0) {
+                fatherName = newFatherName;
+            }
+            return fatherName;
+        },
+        setAge(newAge) {
+            newAge = parseInt(newAge);
+            if (!isNaN(newAge) && newAge >= 0 && newAge <= 100) {
+                age = newAge;
+            }
+            return age;
+        },
+        setFullName(fullName) {
+            const parts = fullName.split(' ');
+            if (parts.length === 3) {
+                [name, surname, fatherName] = parts;
+            }
         }
-    })
-    .catch(error => console.log('Error fetching exchange rates:', error));
+    };
+}
+
+const aaa = createPersonClosureDestruct(createPerson("Вася", "Пупкін"));
+const bbb = createPersonClosureDestruct({name: 'Миколай', age: 75});
+
+//isSorted
+function isSorted(...args) {
+    for (let i = 1; i < args.length; i++) {
+        if (typeof args[i] !== 'number' || args[i] <= args[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+const sorted = isSorted(1, 2, 3, 4, 5);
+console.log(sorted); 
 
 
+//personForm
+function personForm(parent, person) {
+    const inputs = {};
+
+    for (const key in person) {
+        if (key.startsWith('get')) {
+            const prop = key.slice(3);
+            const input = document.createElement('input');
+            input.placeholder = prop;
+            input.value = person[key]();
+            input.oninput = () => {
+                const value = input.value.trim();
+                person[`set${prop}`](value);
+                input.value = person[key]();
+            };
+            parent.appendChild(input);
+            inputs[prop] = input;
+        }
+    }
+
+    return inputs;
+}
+
+const person = createPersonClosure('John', 'Doe');
+const inputs = personForm(document.body, person);
 
